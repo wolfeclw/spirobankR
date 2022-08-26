@@ -8,7 +8,10 @@ read_spiro_sql(
   sqldb = NULL,
   demo = FALSE,
   inspiratory = FALSE,
-  tzone = "America/New_York"
+  tzone = "America/New_York",
+  participant_id = NULL,
+  sample_col = NULL,
+  sample_id = NULL
 )
 }
 \arguments{
@@ -21,6 +24,16 @@ Default = FALSE.}
 
 \item{tzone}{character, time zone of location where measurments were recorded.
 Default = 'America/New_York'.}
+
+\item{participant_id}{user defined string to denote a patient identifier.
+If specified, a new column is created ('ID') listing the string. Default is NULL.}
+
+\item{sample_col;}{character; user defined character string specifying the name of the
+column to denote a sample ID. This column is useful to denote repeated periods of
+data collection by individual patents. Default is NULL.}
+
+\item{sample_id;}{user defined string to denote sample ID. If assigned, a
+value must also be supplied to \code{sample_col}. Default is NULL}
 }
 \value{
 a tibble with spirometry values.
@@ -29,8 +42,9 @@ a tibble with spirometry values.
 Read Spirobank SQLite database
 }
 \examples{
-\dontrun {
-read_spiro_sql <- function(sqldb = NULL, demo = FALSE, inspiratory = FALSE, tzone = 'America/New_York')
+\dontrun{
+read_spiro_sql(sqldb = NULL, demo = FALSE, inspiratory = FALSE, tzone = 'America/New_York',
+               participant_id = NULL, sample_col = NULL, sample_id = NULL )
 }
 
 }
