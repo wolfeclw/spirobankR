@@ -9,6 +9,7 @@ read_spiro_sql(
   demo = FALSE,
   inspiratory = FALSE,
   tzone = "America/New_York",
+  test_threshold = NULL,
   participant_id = NULL,
   sample_col = NULL,
   sample_id = NULL
@@ -25,6 +26,15 @@ Default = FALSE.}
 \item{tzone}{character, time zone of location where measurments were recorded.
 Default = 'America/New_York'.}
 
+\item{test_threshold}{numeric; threshold value (seconds) used partition data into discrete testing sessions.
+If the time difference between the last trial and and a new trial exceeds the threshold value, the current
+trial is designated as belonging to a new test. For example, the threshold value is set at 600 seconds (10 minutes)
+and a patient performs 6 trials  The first 3 trials are done consecutively within 10 minutes.  The fourth trial occurs
+about one hour after the third.  The fifth and sixth trial are completed within 10 minutes of the fourth trial.
+These six trials represent two separate testing sessions according the user defined threshold.
+
+If NULL, the default, the Spirobank defined session variable (\code{spiro_test}) will be used.}
+
 \item{participant_id}{user defined string to denote a patient identifier.
 If specified, a new column is created ('ID') listing the string. Default is NULL.}
 
@@ -33,7 +43,7 @@ column to denote a sample ID. This column is useful to denote repeated periods o
 data collection by individual patents. Default is NULL.}
 
 \item{sample_id;}{user defined string to denote sample ID. If assigned, a
-value must also be supplied to \code{sample_col}. Default is NULL}
+value must also be supplied to \code{sample_col}. Default is NULL.}
 }
 \value{
 a tibble with spirometry values.
