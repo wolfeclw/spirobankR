@@ -4,12 +4,13 @@
 \alias{get_max_values}
 \title{Calculate Maximum Spirometry Values by Test}
 \usage{
-get_max_values(df, grp_vars = NULL, basic_parameters = TRUE)
+get_max_values(df, grp_vars = NULL, sum_fun = "max", basic_parameters = TRUE)
 }
 \arguments{
 \item{df}{a data frame created by \code{read_spiro_sql()} or \verb{read_spiro_pdf().}}
 
-\item{grp_vars}{bldj}
+\item{grp_vars}{character; string of column names to used to calculate maximum values by group (i.e. 'id', 'spiro_test', etc.).
+See \code{\link[dplyr]{dplyr::group_by()}}.}
 
 \item{basic_parameters}{logical; if TRUE, the default, only values for the following parameters are returned:
 \itemize{
@@ -21,16 +22,14 @@ get_max_values(df, grp_vars = NULL, basic_parameters = TRUE)
 \item Peak Flow (PEF)
 }}
 }
-\value{
-a tibble.
-}
 \description{
-Calculate Maximum Spirometry Values by Test
+\code{get_max_values}   Within each test, the maximum value for each spirometric parameter (FEV1, FVC, etc.) is calculated. .
+Users can specify grouping variables, and table operations will be performed 'by group."
 }
 \examples{
 
 \dontrun{
-get_max_values(df, test_threshold = NULL, test_col = 'Spiro_Event', grp_vars = NULL,
+get_max_values(df, test_threshold = NULL, test_col = 'Spiro_Event', grp_vars = c('ID', 'spiro_test'),
                basic_parameters = TRUE)
 }
 

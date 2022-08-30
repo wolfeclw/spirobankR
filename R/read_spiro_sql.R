@@ -2,10 +2,13 @@
 
 #' Read Spirobank SQLite database
 #'
+#' `read_spiro_sql` reads Spirobank patient data that has been exported to a SQL database.  In order to read the data properly,
+#'  all files (Spirobank.sqlite, Spirobank.sqlite-shm, Spirobank.sqlite-wal) must be in the directory, unless the SQL file has
+#'  been previously opened with another software (i.e. DB Browser).
+#'
 #' @param sqldb character; path of Spirobank SQLite database
-#' @param demo logical; include patient demographics and patient anthropometrics?
-#' Default = FALSE.
-#' @param inspiratory logical, include inspiratory maneauvers? Default = FALSE.
+#' @param demo logical; include patient age, height, and weight? Default = FALSE.
+#' @param inspiratory logical, include inspiratory maneuvers? Default = FALSE.
 #' @param tzone character, time zone of location where measurments were recorded.
 #' Default = 'America/New_York'.
 #' @param participant_id user defined string to denote a patient identifier.
@@ -15,16 +18,16 @@
 #' data collection by individual patents. Default is NULL.
 #' @param sample_id; user defined string to denote sample ID. If assigned, a
 #' value must also be supplied to `sample_col`. Default is NULL.
-#' @param test_threshold numeric; threshold value (seconds) used partition data into discrete testing sessions.
-#' If the time difference between the last trial and and a new trial exceeds the threshold value, the current
-#' trial is designated as belonging to a new test. For example, the threshold value is set at 600 seconds (10 minutes)
+#' @param test_threshold numeric; allows a user to partition Spirobank trials into discrete tests according to a user defined
+#' threshold value (seconds). If the time difference between the last trial and and a new trial exceeds the threshold value,
+#' the current trial is designated as belonging to a new test. For example, the threshold value is set at 600 seconds (10 minutes)
 #' and a patient performs 6 trials  The first 3 trials are done consecutively within 10 minutes.  The fourth trial occurs
 #' about one hour after the third.  The fifth and sixth trial are completed within 10 minutes of the fourth trial.
-#' These six trials represent two separate testing sessions according the user defined threshold.
+#' These six trials represent two separate testing sessions according the user defined threshold. Spirobank test number is indicated
+#' under the column `spiro_test.`
 #'
-#' If NULL, the default, the Spirobank defined session variable (`spiro_test`) will be used.
+#' If NULL, the default, `spiro_test` will be defined according to Spirobank software settings.
 #'
-#' @return a tibble with spirometry values.
 #' @export
 #'
 #' @examples
@@ -59,6 +62,10 @@ read_spiro_sql <- function(sqldb = NULL, demo = FALSE, inspiratory = FALSE, tzon
   if (demo == FALSE) {
     sdf <- sdf %>%
       dplyr::select(-dplyr::contains('PATIENT'))
+  } else {
+    sdf <- sdf %>%
+      dplyr::mutate(ZPATIENTBIRTHDATE = as.Date(lubridate::as_datetime(ZPATIENTBIRTHDATE, origin = '2001-01-01', tz = tzone),
+                                                tz = tzone))
   }
 
   if (inspiratory == FALSE) {
