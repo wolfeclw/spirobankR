@@ -8,15 +8,16 @@
 #'
 #' @param sqldb character; path of Spirobank SQLite database
 #' @param demo logical; include patient age, height, and weight? Default = FALSE.
-#' @param inspiratory logical, include inspiratory maneuvers? Default = FALSE.
-#' @param tzone character, time zone of location where measurments were recorded.
+#' @param inspiratory logical; include inspiratory maneuvers? Default = FALSE.
+#' @param tzone character; time zone of location where measurements were recorded.
 #' Default = 'America/New_York'.
-#' @param participant_id user defined string to denote a patient identifier.
-#' If specified, a new column is created ('ID') listing the string. Default is NULL.
-#' @param sample_col; character; user defined character string specifying the name of the
+#' @param participant_id user defined string to denote a patient identifier. If NULL, the default, the patient identifier
+#' entered into the MIR Spirobank app is used. Supplying a value to `participant_id` will overwrite the value entered
+#' into the phone app. The patient identifier is listed under the `ID` column in the output data frame.
+#' @param sample_col character; user defined character string specifying the name of the
 #' column to denote a sample ID. This column is useful to denote repeated periods of
 #' data collection by individual patents. Default is NULL.
-#' @param sample_id; user defined string to denote sample ID. If assigned, a
+#' @param sample_id user defined string to denote sample ID. If assigned, a
 #' value must also be supplied to `sample_col`. Default is NULL.
 #' @param test_threshold numeric; allows a user to partition Spirobank trials into discrete tests according to a user defined
 #' threshold value (seconds). If the time difference between the last trial and and a new trial exceeds the threshold value,
@@ -39,6 +40,10 @@
 read_spiro_sql <- function(sqldb = NULL, demo = FALSE, inspiratory = FALSE, tzone = 'America/New_York',
                            test_threshold = NULL, participant_id = NULL, sample_col = NULL,
                            sample_id = NULL) {
+
+  if(sum(!is.null(sample_col), !is.null(sample_id)) == 1) {
+    stop('Both `sample_col` and `sample_id` must have values.', call. = FALSE)
+  }
 
   con <- DBI::dbConnect(RSQLite::SQLite(), sqldb)
   slist <- as.data.frame(DBI::dbListTables(con))
@@ -101,10 +106,6 @@ read_spiro_sql <- function(sqldb = NULL, demo = FALSE, inspiratory = FALSE, tzon
 
   if(!is.null(participant_id)) {
     sdf$ID <- participant_id
-  }
-
-  if(sum(!is.null(sample_col), !is.null(sample_id)) == 1) {
-    stop('Both `sample_col` and `sample_id` must have values.', call. = FALSE)
   }
 
   if(sum(!is.null(sample_col), !is.null(sample_id)) == 2) {

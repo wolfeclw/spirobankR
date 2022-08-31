@@ -20,9 +20,9 @@ read_spiro_sql(
 
 \item{demo}{logical; include patient age, height, and weight? Default = FALSE.}
 
-\item{inspiratory}{logical, include inspiratory maneuvers? Default = FALSE.}
+\item{inspiratory}{logical; include inspiratory maneuvers? Default = FALSE.}
 
-\item{tzone}{character, time zone of location where measurments were recorded.
+\item{tzone}{character; time zone of location where measurements were recorded.
 Default = 'America/New_York'.}
 
 \item{test_threshold}{numeric; allows a user to partition Spirobank trials into discrete tests according to a user defined
@@ -35,14 +35,15 @@ under the column \code{spiro_test.}
 
 If NULL, the default, \code{spiro_test} will be defined according to Spirobank software settings.}
 
-\item{participant_id}{user defined string to denote a patient identifier.
-If specified, a new column is created ('ID') listing the string. Default is NULL.}
+\item{participant_id}{user defined string to denote a patient identifier. If NULL, the default, the patient identifier
+entered into the MIR Spirobank app is used. Supplying a value to \code{participant_id} will overwrite the value entered
+into the phone app. The patient identifier is listed under the \code{ID} column in the output data frame.}
 
-\item{sample_col;}{character; user defined character string specifying the name of the
+\item{sample_col}{character; user defined character string specifying the name of the
 column to denote a sample ID. This column is useful to denote repeated periods of
 data collection by individual patents. Default is NULL.}
 
-\item{sample_id;}{user defined string to denote sample ID. If assigned, a
+\item{sample_id}{user defined string to denote sample ID. If assigned, a
 value must also be supplied to \code{sample_col}. Default is NULL.}
 }
 \description{
