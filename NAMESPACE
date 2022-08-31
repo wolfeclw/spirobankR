@@ -2,5 +2,6 @@
 
 export("%>%")
 export(get_summary_values)
+export(read_ispirometry_pdf)
 export(read_spiro_sql)
 importFrom(magrittr,"%>%")
