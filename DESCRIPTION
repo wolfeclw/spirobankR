@@ -1,15 +1,14 @@
 Package: spirobankR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: Read and Analyze Spirobank Data
+Version: 1.0.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Chris",
+           family = "Wolfe",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "wolfe.christopherlee@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+Description: spirobanR includes funtions to read and summarize PDF and SQL Spirobank data.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -20,4 +19,8 @@ Imports:
     DBI,
     dplyr,
     tidyr,
-    purrr
+    purrr,
+    lubridate,
+    tibble,
+    pdftools,
+    stringr

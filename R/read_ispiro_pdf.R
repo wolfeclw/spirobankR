@@ -1,8 +1,8 @@
 
-#' Read iSpirometry PDF Export
+#' Read iSpirometry PDF Files
 #'
-#'`read_ispirometry_pdf()` reads exported PDF files from the iSpirometry phone app. Text is extracted using
-#'the Tesseract OCR engine ([Tesseract](https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html))
+#'`read_ispirometry_pdf()` reads exported PDF files from the iSpirometry phone app. Text is
+#'extracted using the Tesseract OCR engine ([Tesseract](https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html))
 #'
 #' @param pdf character; path of of iSpirometry PDF export.
 #' @param pages numeric; vector of page numbers to extract. If NULL, the default, all pages are extracted.
@@ -15,26 +15,29 @@
 #' data collection by individual patents. Default is NULL.
 #' @param sample_id user defined string to denote sample ID. If assigned, a
 #' value must also be supplied to `sample_col`. Default is NULL.
-#' @param test_threshold numeric; allows a user to partition Spirobank trials into discrete tests according to a user defined
-#' threshold value (seconds). If the time difference between the last trial and and a new trial exceeds the threshold value,
-#' the current trial is designated as belonging to a new test. For example, the threshold value is set at 600 seconds (10 minutes)
-#' and a patient performs 6 trials. The first 3 trials are done consecutively within 10 minutes. The fourth trial occurs
-#' about one hour after the third. The fifth and sixth trial are completed within 10 minutes of the fourth trial.
-#' These six trials represent two separate testing sessions according the user defined threshold. Spirobank test number is indicated
-#' under the column `spiro_test.`
+#' @param test_threshold numeric; allows a user to partition Spirobank trials into discrete
+#' tests according to a user defined threshold value (seconds). If the time difference
+#' between the last trial and and a new trial exceeds the threshold value, the current
+#' trial is designated as belonging to a new test. For example, the threshold value is
+#' set at 600 seconds (10 minutes) and a patient performs 6 trials. The first 3 trials are
+#' done consecutively within 10 minutes. The fourth trial occurs about one hour after the
+#' third. The fifth and sixth trial are completed within 10 minutes of the fourth trial. These
+#' six trials represent two separate testing sessions according the user defined threshold.
+#' Spirobank test number is indicated under the column `spiro_test.`
 #'#'
 #' @export
 #'
 #' @examples
 #'
 #' \dontrun{
-#' read_ispiro_pdf(pdf, pages = NULL, tzone = 'America/New_York', participant_id = NULL, sample_col = NULL,
-#'                 sample_id = NULL, test_threshold = NULL)
+#' read_ispiro_pdf(pdf, pages = NULL, tzone = 'America/New_York', participant_id = NULL,
+#'                 sample_col = NULL, sample_id = NULL, test_threshold = NULL)
 #' }
 #'
 #'
-read_ispirometry_pdf <- function(pdf, pages = NULL, tzone = 'America/New_York', participant_id = NULL, sample_col = NULL,
-                            sample_id = NULL, test_threshold = NULL) {
+read_ispirometry_pdf <- function(pdf, pages = NULL, tzone = 'America/New_York',
+                                 participant_id = NULL,sample_col = NULL, sample_id = NULL,
+                                 test_threshold = NULL) {
 
   if(sum(!is.null(sample_col), !is.null(sample_id)) == 1) {
     stop('  Both `sample_col` and `sample_id` must have values.', call. = FALSE)

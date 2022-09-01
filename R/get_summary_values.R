@@ -8,7 +8,7 @@
 #'
 #' @param df a data frame created by `read_spiro_sql()` or `read_spiro_pdf().`
 #' @param grp_vars character; string of column names to used to calculate maximum values by group (i.e. 'id', 'spiro_test', etc.).
-#' See \code{\link[dplyr]{dplyr::group_by()}}.
+#' See \link[dplyr]{group_by}.
 #' @param sum_fun character; summary function to be applied.  Must be one of c("max," "mean," "sd," "median," "min").
 #' @param basic_parameters logical; if TRUE, the default, only values for the following parameters are returned:
 #' - FEV1

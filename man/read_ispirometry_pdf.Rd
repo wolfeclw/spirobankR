@@ -2,7 +2,7 @@
 % Please edit documentation in R/read_ispiro_pdf.R
 \name{read_ispirometry_pdf}
 \alias{read_ispirometry_pdf}
-\title{Read iSpirometry PDF Export}
+\title{Read iSpirometry PDF Files}
 \usage{
 read_ispirometry_pdf(
   pdf,
@@ -32,24 +32,26 @@ data collection by individual patents. Default is NULL.}
 \item{sample_id}{user defined string to denote sample ID. If assigned, a
 value must also be supplied to \code{sample_col}. Default is NULL.}
 
-\item{test_threshold}{numeric; allows a user to partition Spirobank trials into discrete tests according to a user defined
-threshold value (seconds). If the time difference between the last trial and and a new trial exceeds the threshold value,
-the current trial is designated as belonging to a new test. For example, the threshold value is set at 600 seconds (10 minutes)
-and a patient performs 6 trials. The first 3 trials are done consecutively within 10 minutes. The fourth trial occurs
-about one hour after the third. The fifth and sixth trial are completed within 10 minutes of the fourth trial.
-These six trials represent two separate testing sessions according the user defined threshold. Spirobank test number is indicated
-under the column \code{spiro_test.}
+\item{test_threshold}{numeric; allows a user to partition Spirobank trials into discrete
+tests according to a user defined threshold value (seconds). If the time difference
+between the last trial and and a new trial exceeds the threshold value, the current
+trial is designated as belonging to a new test. For example, the threshold value is
+set at 600 seconds (10 minutes) and a patient performs 6 trials. The first 3 trials are
+done consecutively within 10 minutes. The fourth trial occurs about one hour after the
+third. The fifth and sixth trial are completed within 10 minutes of the fourth trial. These
+six trials represent two separate testing sessions according the user defined threshold.
+Spirobank test number is indicated under the column \code{spiro_test.}
 #'}
 }
 \description{
-\code{read_ispirometry_pdf()} reads exported PDF files from the iSpirometry phone app. Text is extracted using
-the Tesseract OCR engine (\href{https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html}{Tesseract})
+\code{read_ispirometry_pdf()} reads exported PDF files from the iSpirometry phone app. Text is
+extracted using the Tesseract OCR engine (\href{https://cran.r-project.org/web/packages/tesseract/vignettes/intro.html}{Tesseract})
 }
 \examples{
 
 \dontrun{
-read_ispiro_pdf(pdf, pages = NULL, tzone = 'America/New_York', participant_id = NULL, sample_col = NULL,
-                sample_id = NULL, test_threshold = NULL)
+read_ispiro_pdf(pdf, pages = NULL, tzone = 'America/New_York', participant_id = NULL,
+                sample_col = NULL, sample_id = NULL, test_threshold = NULL)
 }
 
 

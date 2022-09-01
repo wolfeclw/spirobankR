@@ -15,7 +15,7 @@ get_summary_values(
 \item{df}{a data frame created by \code{read_spiro_sql()} or \verb{read_spiro_pdf().}}
 
 \item{grp_vars}{character; string of column names to used to calculate maximum values by group (i.e. 'id', 'spiro_test', etc.).
-See \code{\link[dplyr]{dplyr::group_by()}}.}
+See \link[dplyr]{group_by}.}
 
 \item{sum_fun}{character; summary function to be applied.  Must be one of c("max," "mean," "sd," "median," "min").}
 
