@@ -6,3 +6,6 @@
 spiro_trash
 test_data/
 test_funs/
+*.raw
+*.jpeg
+*.png
